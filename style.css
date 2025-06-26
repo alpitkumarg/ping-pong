@@ -11,6 +11,38 @@ h1 {
   margin: 20px 0 10px 0;
 }
 
+#scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.score-container {
+  text-align: center;
+}
+
+.score-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+}
+
+#game-status {
+  margin: 10px 0;
+  font-size: 18px;
+  font-weight: bold;
+  height: 25px;
+  color: #4CAF50;
+}
+
 #pong {
   background: #222;
   display: block;
@@ -18,4 +50,5 @@ h1 {
   border: 2px solid #fff;
   border-radius: 8px;
   box-shadow: 0 0 16px #000;
+  cursor: none;
 }
