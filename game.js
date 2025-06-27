@@ -30,6 +30,20 @@ const playerScoreElement = document.getElementById('player-score');
 const aiScoreElement = document.getElementById('ai-score');
 const gameStatusElement = document.getElementById('game-status');
 
+// Background music setup
+const bgMusic = document.getElementById('bg-music');
+if (bgMusic) {
+  function tryPlayMusic() {
+    if (bgMusic.paused) {
+      bgMusic.volume = 0.5; // moderate volume
+      bgMusic.play().catch(() => {});
+    }
+  }
+  window.addEventListener('click', tryPlayMusic, { once: true });
+  window.addEventListener('touchstart', tryPlayMusic, { once: true });
+  window.addEventListener('keydown', tryPlayMusic, { once: true });
+}
+
 // Draw functions
 function drawRect(x, y, w, h, color='#fff') {
   ctx.fillStyle = color;
