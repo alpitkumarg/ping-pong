@@ -32,16 +32,33 @@ const gameStatusElement = document.getElementById('game-status');
 
 // Background music setup
 const bgMusic = document.getElementById('bg-music');
-if (bgMusic) {
-  function tryPlayMusic() {
-    if (bgMusic.paused) {
-      bgMusic.volume = 0.5; // moderate volume
-      bgMusic.play().catch(() => {});
-    }
+
+// Enhanced background music auto-start on first user interaction
+const interactionEvents = ['pointerdown', 'click', 'touchstart', 'keydown'];
+interactionEvents.forEach(evtName => {
+  window.addEventListener(evtName, tryPlayMusic, { once: true, passive: true });
+});
+
+// optional: resume music if it ever stops (e.g., lost focus)
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && bgMusic && bgMusic.paused) {
+    bgMusic.play().catch(() => {});
   }
-  window.addEventListener('click', tryPlayMusic, { once: true });
-  window.addEventListener('touchstart', tryPlayMusic, { once: true });
-  window.addEventListener('keydown', tryPlayMusic, { once: true });
+});
+
+function tryPlayMusic() {
+  if (!bgMusic) return;
+  if (bgMusic.paused) {
+    bgMusic.volume = 0.5;
+    bgMusic.play().catch(err => {
+      // most likely gesture restriction — will retry on next interaction
+      console.warn('Unable to start background music:', err);
+      // retry on next gesture
+      interactionEvents.forEach(evtName => {
+        window.addEventListener(evtName, tryPlayMusic, { once: true, passive: true });
+      });
+    });
+  }
 }
 
 // Draw functions
