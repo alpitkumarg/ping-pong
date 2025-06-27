@@ -32,6 +32,7 @@ const gameStatusElement = document.getElementById('game-status');
 
 // Background music setup
 const bgMusic = document.getElementById('bg-music');
+const audioIndicator = document.getElementById('audio-indicator');
 
 // Enhanced background music auto-start on first user interaction
 const interactionEvents = ['pointerdown', 'click', 'touchstart', 'keydown'];
@@ -59,6 +60,36 @@ function tryPlayMusic() {
       });
     });
   }
+}
+
+function setAudioIndicator(color) {
+  if (audioIndicator) audioIndicator.style.background = color;
+}
+
+// initial state
+setAudioIndicator('#f44336');
+
+if (bgMusic) {
+  console.log('Background music element found:', bgMusic);
+  console.log('Initial readyState:', bgMusic.readyState, 'src:', bgMusic.currentSrc || bgMusic.src);
+  // log ready state changes
+  bgMusic.addEventListener('loadeddata', () => {
+    console.log('Audio loaded. readyState =', bgMusic.readyState);
+    // yellow = loaded but not yet playing
+    setAudioIndicator('#FFC107');
+  });
+  bgMusic.addEventListener('play', () => {
+    console.log('Background music started playing.');
+    setAudioIndicator('#4CAF50'); // green = playing
+  });
+  bgMusic.addEventListener('pause', () => {
+    console.log('Background music paused.');
+    setAudioIndicator('#f44336');
+  });
+  bgMusic.addEventListener('error', (e) => {
+    console.error('Background music error:', e);
+    setAudioIndicator('#f44336');
+  });
 }
 
 // Draw functions

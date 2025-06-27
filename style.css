@@ -52,3 +52,15 @@ h1 {
   box-shadow: 0 0 16px #000;
   cursor: none;
 }
+
+#audio-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #f44336; /* red = not playing */
+  box-shadow: 0 0 4px rgba(0,0,0,0.6);
+  z-index: 1000;
+}
